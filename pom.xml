@@ -6,7 +6,7 @@
 
     <groupId>hu.psprog.leaflet</groupId>
     <artifactId>tlp-appender</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <properties>
 
@@ -16,10 +16,11 @@
         <!-- compiler settings -->
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- other versions -->
-        <jersey.version>2.30</jersey.version>
-        <jackson.version>2.10.2</jackson.version>
+        <jersey.version>2.32</jersey.version>
+        <jackson.version>2.11.2</jackson.version>
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.30</slf4j.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -135,10 +136,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <compilerArgs>
-                        <arg>--add-exports</arg>
-                        <arg>com.fasterxml.jackson.jaxrs.json/com.fasterxml.jackson.jaxrs.json=leaflet.component.tlp.appender</arg>
-                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
