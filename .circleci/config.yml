@@ -4,7 +4,7 @@ orbs:
 jobs:
   build_leaflet-tlp-appender:
     docker:
-      - image: cimg/openjdk:11.0.6
+      - image: cimg/openjdk:11.0.12
     steps:
       - checkout
       - run:

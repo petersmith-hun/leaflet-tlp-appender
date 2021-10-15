@@ -6,12 +6,12 @@ import ch.qos.logback.classic.spi.ThrowableProxy;
 import ch.qos.logback.classic.spi.ThrowableProxyVO;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import hu.psprog.leaflet.tlp.appender.domain.OptimizedLoggingEventVO;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -20,26 +20,26 @@ import javax.ws.rs.core.MediaType;
 import java.lang.reflect.Field;
 import java.net.URI;
 
-import static junit.framework.TestCase.fail;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 /**
  * Unit tests for {@link TinyLogProcessorAppender}.
  *
  * @author Peter Smith
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class TinyLogProcessorAppenderTest {
 
     private static final String TEST_APP = "test-app";
-    private static final String HOST = "http://local.dev";
+    private static final String HOST = "https://local.dev";
     private static final boolean ENABLED = true;
     private static final String EXPECTED_URI = HOST + "/logs";
     private static final String THREAD_NAME = "main";
@@ -61,7 +61,7 @@ public class TinyLogProcessorAppenderTest {
     @InjectMocks
     private TinyLogProcessorAppender appender;
 
-    @Before
+    @BeforeEach
     public void setup() {
         appender.setAppID(TEST_APP);
         appender.setEnabled(ENABLED);
@@ -109,7 +109,7 @@ public class TinyLogProcessorAppenderTest {
         appender.append(loggingEvent);
 
         // then
-        verifyZeroInteractions(loggingEvent, invocationBuilder, webTarget);
+        verifyNoInteractions(loggingEvent, invocationBuilder, webTarget);
     }
 
     @Test
