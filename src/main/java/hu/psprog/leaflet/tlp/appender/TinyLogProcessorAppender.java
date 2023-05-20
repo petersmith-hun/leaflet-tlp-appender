@@ -5,9 +5,11 @@ import ch.qos.logback.core.AppenderBase;
 import hu.psprog.leaflet.tlp.appender.client.TLPClientFactory;
 import hu.psprog.leaflet.tlp.appender.domain.OptimizedLoggingEventVO;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.Invocation;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 /**
  * Logback appender implementation for TLP.
@@ -26,24 +28,12 @@ public class TinyLogProcessorAppender extends AppenderBase<ILoggingEvent> {
     private String appID;
     private boolean enabled;
 
-    public String getHost() {
-        return host;
-    }
-
     public void setHost(String host) {
         this.host = host;
     }
 
-    public String getAppID() {
-        return appID;
-    }
-
     public void setAppID(String appID) {
         this.appID = appID;
-    }
-
-    public boolean getEnabled() {
-        return enabled;
     }
 
     public void setEnabled(boolean enabled) {
@@ -67,12 +57,12 @@ public class TinyLogProcessorAppender extends AppenderBase<ILoggingEvent> {
 
     private void pushLog(ILoggingEvent loggingEvent) {
         if (enabled) {
-            webTarget.request(MediaType.APPLICATION_JSON_TYPE)
-                    .post(createEntity(loggingEvent));
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON_TYPE);
+            try (Response ignored = invocationBuilder.post(createEntity(loggingEvent))) { }
         }
     }
 
-    private Entity createEntity(ILoggingEvent loggingEvent) {
+    private Entity<OptimizedLoggingEventVO> createEntity(ILoggingEvent loggingEvent) {
         return Entity.entity(OptimizedLoggingEventVO.build(loggingEvent, appID), MediaType.APPLICATION_JSON_TYPE);
     }
 }
