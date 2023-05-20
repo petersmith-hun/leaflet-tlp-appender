@@ -1,9 +1,8 @@
 package hu.psprog.leaflet.tlp.appender.client;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
+import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.WebTarget;
 
 /**
  * Factory than can create a {@link WebTarget} so the appender is able to communicate with TLP.
@@ -25,6 +24,7 @@ public class TLPClientFactory {
      * @return built {@link WebTarget} object
      */
     public static WebTarget createWebTarget(String host) {
+
         return ClientBuilder.newBuilder()
                 .register(JacksonJsonProvider.class)
                 .build()
